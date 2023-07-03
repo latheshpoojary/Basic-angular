@@ -1,3 +1,6 @@
+<h1>{{message}}</h1>
+
+
 <input type="text" bind-disabled="isdiasabled" placeholder="hello there">
 <h2 [style.color]="isDanger?'orange':'red'">Hello world</h2>
 <h2 [ngStyle]="styleObj">Hello world</h2>
@@ -26,3 +29,10 @@
     <p *ngSwitchCase="'blue'">Blue</p>
     <p *ngSwitchDefault>choice color man</p>
 </div>
+
+
+<div *ngFor="let lang of arrayLang;index as i;odd as o;first as f;last as l;">
+    <li>{{i}} | {{lang}} |  {{o}} | {{f}} | {{l}}</li>
+</div>
+
+<app-child (childEvent)="message=$event" [parentData]="outputVariable" ></app-child>

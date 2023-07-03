@@ -133,6 +133,7 @@ public display=false;
 ### 8.ngSwitch directive
 - use **[ngSwitch]="choice variable"**.
 - then use ***ngSwitchCase="choice"**.
+- if nothing is compare then default case will be executed by using **ngSwitchefault**
 ```
 <div [ngSwitch]="color">
     <p *ngSwitchCase="'red'">Red</p>
@@ -140,4 +141,77 @@ public display=false;
     <p *ngSwitchCase="'blue'">Blue</p>
     <p *ngSwitchDefault>choice color man</p>
 </div>
+```
+
+### 9.ngFor directive
+- it is used for an **array** element.
+- it act like a for loop as in other languege.
+#### syntax
+```
+<element *ngFor="let variableName of arrayName;index as secondVariable;odd as thirdVariableName;even as forthVariableName;last as fifthVariable;first as sixthVariable">
+```
+>Note: here index as,odd,even,first,last all are optional.we can find the index of the element by index of ,we can find the first an last,even an odd position element.it will return true or false.
+
+```
+<div *ngFor="let lang of arrayLang;index as i;odd as o;first as f;last as l;">
+    <li>{{i}} | {{lang}} |  {{o}} | {{f}} | {{l}}</li>
+</div>
+```
+![Alt text](image.png)
+
+
+
+### 10. Component Interaction
+- It is used dto send the ata from child to parent and vise versa.
+- to send data from the parent to child we have to use **classBinding**.
+- we can send the value from  parent to the child with child tag.
+#### syntax
+```
+<app-child [parentData]="outputVariable" ></app-child>
+
+
+//class component
+outputVariable="lathesh";
+```
+Now **lathesh** sen to the child component with the name as parentata.
+- #### Recieving value from parent.
+1.import input form core module.
+2.use @input decorator.
+```
+@Input() public parentData:any;
+```
+>Note:the name passed by the parent an the recieve by child should be same.
+Here **parentData** is same as parent send data.
+
+3.use this variable to display or some operation on that data.
+```
+<p>chid {{parentData}}</p>//it display chid lathesh
+```
+- #### sending data from child to parent.
+1.import output and eventEmitter from core module.
+2.use @output and create new object of EventEmmiter.
+```
+@Output() public childEvent = new EventEmitter();
+```
+3.Now send the data from child to parent by calling function when click event triggered.
+```
+<button (click)="send()">Submit</button>
+
+
+//class component
+send(){
+  this.childEvent.emit("Time is the soul");
+}
+```
+>here **emit** method of the eventEmmiter is used for sending value from child to parent.
+4.receive the value send from the child in parent.
+```
+<app-child (childEvent)="message=$event" [parentData]="outputVariable" ></app-child>
+```
+> - here **(childEvent)**  is the object of eventEmitter which is created inside the child.
+>- **message** is the variable should be created inside the parent.
+>- $event is the keyword used to get the data.
+5.display the value now.
+```
+<h1>{{message}}</h1>
 ```
