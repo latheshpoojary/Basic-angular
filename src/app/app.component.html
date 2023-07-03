@@ -1,4 +1,4 @@
-<h1>{{message}}</h1>
+<h1>{{message | titlecase}}</h1>
 
 
 <input type="text" bind-disabled="isdiasabled" placeholder="hello there">
@@ -18,7 +18,7 @@
     <h1 >Then Block</h1>
 </ng-template>
 <ng-template #elseBlock>
-    <h1>Then Block</h1>
+    <h1>Then Block | lowercase</h1>
 </ng-template>
 
 
@@ -36,3 +36,7 @@
 </div>
 
 <app-child (childEvent)="message=$event" [parentData]="outputVariable" ></app-child>
+
+
+
+<h1>{{date  | date:'mediumTime'}}</h1>

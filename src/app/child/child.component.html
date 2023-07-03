@@ -1,2 +1,8 @@
 <p>chid {{parentData}}</p>
 <button (click)="send()">Submit</button>
+<ul *ngFor="let row of arr">
+    <li>{{row.age}}</li>
+    <li>{{row.name}}</li>
+    <li>{{row.experience}}</li>
+
+</ul>

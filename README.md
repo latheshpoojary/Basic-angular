@@ -215,3 +215,72 @@ send(){
 ```
 <h1>{{message}}</h1>
 ```
+
+
+### 11.pipes
+- used for change the style of the text.
+- it can only be applicable for the value inside the {{}} not applicable for normal text.
+- #### for String
+> - lowercase
+> - uppercase
+> - titlecase
+> - slice:start:end(end excluded)
+```
+<h1>{{message | lowercase}}</h1>
+<h1>{{message | uppercase}}</h1>
+<h1>{{message | titlecase}}</h1>
+<h1>{{message | slice:3:5}}</h1>
+```
+- #### for object
+> - json
+```
+<h1>{{person | json}}</h1>
+
+
+
+//class component
+public person={
+      name:"lathesh",
+      age:22
+}
+```
+
+- #### for number
+> - number:number of digit.decimal range
+> - percent
+> - currancy
+```
+<h1>{{2.345  | number:2.2-3}}</h1> //02.345
+<h1>{{2.345  | number:1.2-6}}</h1> //2.345000
+<h1>{{2.345  | number:1.1-2}}</h1> //2.35
+<h1>{{0.25  | percent}}</h1> //25%
+<h1>{{2345  | currancy}}</h1> //$2345
+<h1>{{2345  | currancy:'GBP}}</h1> //₤2345
+<h1>{{2345  | currancy:'GBP':'code'}}</h1> //GBP2345
+
+
+
+```
+- #### for date
+> - date:short
+> - date:medium
+> - date:long
+```
+<h1>{{date | date:'short'}}</h1>//3/7/2023 3.26PM
+<h1>{{date | date:'shortDate'}}</h1>//3/7/2023 
+<h1>{{date | date:'shortTime'}}</h1>//3.25PM 
+
+
+
+
+
+//class component
+public date = new Date();
+```
+
+ ### 12.Service
+- service is used for, 
+>- share data among component
+>- logic part
+>- database transfermation
+>- dependency injection

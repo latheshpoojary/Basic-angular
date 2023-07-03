@@ -12,6 +12,7 @@ import {NgModel} from '@angular/forms'
 })
 export class AppComponent {
   title = 'angular-learn';
+  public date = new Date();
   message="";
   outputVariable = "lathesh";
   isdiasabled:boolean=true;
