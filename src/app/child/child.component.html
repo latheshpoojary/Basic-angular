@@ -6,3 +6,49 @@
     <li>{{row.experience}}</li>
 
 </ul>
+
+
+<h1>{{message | titlecase}}</h1>
+
+
+<input type="text" bind-disabled="isdiasabled" placeholder="hello there">
+<h2 [style.color]="isDanger?'orange':'red'">Hello world</h2>
+<h2 [ngStyle]="styleObj">Hello world</h2>
+<input type="text" [(ngModel)]="name">
+{{name}}
+
+
+<h1 *ngIf="display; else elseBlock">Hello there</h1>
+<ng-template #elseBlock>
+    <h1>Else block</h1>
+</ng-template>
+
+<div *ngIf="display; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+    <h1>Then Block</h1>
+</ng-template>
+<ng-template #elseBlock>
+    <h1>Then Block | lowercase</h1>
+</ng-template>
+
+
+<div [ngSwitch]="color">
+    <p *ngSwitchCase="'red'">Red</p>
+
+    <p *ngSwitchCase="'green'">Green</p>
+    <p *ngSwitchCase="'blue'">Blue</p>
+    <p *ngSwitchDefault>choice color man</p>
+</div>
+
+
+<div *ngFor="let lang of arrayLang;index as i;odd as o;first as f;last as l;">
+    <li>{{i}} | {{lang}} | {{o}} | {{f}} | {{l}}</li>
+</div>
+
+<app-child (childEvent)="message=$event" [parentData]="outputVariable"></app-child>
+
+
+
+<h1>{{date | date:'mediumTime'}}</h1>
+
+<a routerLink="sub">Child</a>

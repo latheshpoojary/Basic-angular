@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http'
+import { empData } from './employee';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SimpleserviceService {
-
-  constructor() { }
-  getArray(){
-    return [
-      {name:"lathesh",age:21,experience:2},
-      {name:"swasthik",age:21,experience:3},
-      {name:"adarsh",age:22,experience:2},
-      {name:"Ranju",age:20,experience:1},
-      {name:"suneel",age:23,experience:2}
-
-    ]
+  public url:string="/assets/data/emp.json";
+  constructor(private http:HttpClient) { }
+  getArray():Observable<empData[]>{
+    return this.http.get<empData[]>(this.url);
+                    
   }
+ 
 }

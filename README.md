@@ -282,5 +282,188 @@ public date = new Date();
 - service is used for, 
 >- share data among component
 >- logic part
->- database transfermation
+>- database transformation
 >- dependency injection
+
+#### creating service files
+```
+npx ng g s service-name
+```
+#### importing service inside the app.module.ts
+```
+import {service name} from 'location of the service';
+providers:[serviceName]//this one important
+```
+#### build logic inside service.
+```
+ getArray(){
+    return [
+      {name:"lathesh",age:21,experience:2},
+      {name:"swasthik",age:21,experience:3},
+      {name:"adarsh",age:22,experience:2},
+      {name:"Ranju",age:20,experience:1} ,
+      {name:"suneel",age:23,experience:2}
+
+    ]
+  }
+```
+#### include service inside the component.
+- import service inside the component.
+- register service inside the component.
+- access the service inside component
+```
+1. import {SimpleserviceService} from '../simpleservice.service';
+2. constructor(private service:SimpleserviceService){}
+3. this.arr=this.service.getArray();
+```
+
+### 13.Http and observable
+- http is use to send and receive request and response from the api or webserver or database.
+> 1. service send the request to the http.
+> 2. http send the request to the api,webservice or database.
+> 3. api,webservice or database send the response back to the http.
+> 4. the http send the response as a observable type to the service.
+> Note:observable is a asynchronous type of response.
+> 5. here observable is the http response.
+> 6. service page responsible for formating these response.
+> 7. the component which is injected this service is to subscribe to this response to get the access of the data.
+
+- RxJs is use for working with observable.
+
+#### step to implement
+1. import the ==httpClientModule== inside the **app.module.ts**.
+2. add it into the **import statement** inside the app.module.ts
+```
+import {HttpClientModule} from '@angular/common/http';
+ imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule      <<<---------
+  ],
+```
+
+3. import the **httpClient** inside the **service**.
+4. add **dependency** inside the **constructor**.
+5. call the get method of http which accept url parameter. to get url you are simply create one ==json file within data folder which is inside the assets folder==.
+6. add the **array of object** inside the json file.
+7. get request send the ==observable type of response=== so to convert the observable we have to create one typescript file with interface.
+8. create one ts file which contains the interface of format same as json an export it.
+9. add interface type to the response of the get method and observable type.
+```
+import {HttpClient} from '@angular/common/http'
+import { empData } from './employee';
+import { Observable } from 'rxjs';
+
+export class SimpleserviceService {
+  public url:string="/assets/data/emp.json"; //json file path
+  constructor(private http:HttpClient) { }  //depenency injection
+  getArray():Observable<empData[]>{        // making empData of type.
+    return this.http.get<empData[]>(this.url); //converting response to empdata type.
+  }
+}
+
+
+//emp.json
+
+[
+      {"name":"lathesh","age":21,"experience":2},
+      {"name":"swasthik","age":21,"experience":3},
+      {"name":"adarsh","age":22,"experience":2},
+      {"name":"Ranju","age":20,"experience":1},
+      {"name":"suneel","age":23,"experience":2},
+      {"name":"vishal","age":25,"experience":4}
+
+
+    ]
+
+
+//employee.ts
+
+export interface empData{
+    name:string,
+    age:number,
+    experience:number
+}
+```
+
+10. after getting response to use the data of it we should ==subscribe== it. which has to be done in component class.
+```
+this.service.getArray()
+.subscribe(data=>this.arr=data); //it get all the value from the json file.
+```
+
+
+### 14.Routing and navigation
+
+1. routerLink also used to navigate from one page to another.
+2. routerLinkActive is used to highlight the clicked button.
+
+
+### 15. Wilcard and redirect route
+1. routing are specifie using array of object.
+2. there are two main argument which are **path** and **component**.
+3. path is used to show the url path.
+4. component is used to navigate towhich component when the path is set.
+```
+ {path:'**',component:'errorcomponent'} //it match all the url.
+
+```
+>Note:should not use path:** at the start because the control start from the beginning of the route array. so ** matches all the url hence it display that page again an again no matter what the url is.
+therefor mention at the end.
+
+5. for empty url we can use ==path:' ',redirectTo:'/employee',pathMatch:'full';==
+> 1. it check whether the url is empty if it is then it redirect the path to employee url.
+> 2. patchMatch is used to match the path fully means it check the url whether it is empty or not then only redirect the url.
+> 3. there are two values for the pathMatch that is prefix and full.
+
+```
+const routes: Routes = [
+  {path:'',redirectTo:'sub',pathMatch:'full'},
+  {path:'child',component:ChildComponent},
+  {path:'sub',component:SubChildComponent},
+  {path:'display',component:DisplayEmpComponent},
+  {path:'**',component:SubChildComponent}
+];
+```
+
+### 16. Route Parameters
+- here we are passing value from paarent to child component.
+- to pass value from parent to child we need router module.
+
+#### sending message from parent.
+1. import the **router Module**.
+2. In parent component import router and use **navigate function** of router.
+3. pass the parameter inside the navigate function.
+```
+import { Router } from '@angular/router';
+constructor(private route:Router){}
+sendMe(){
+    this.route.navigate(["display","hello"]);
+  }
+```
+>first parameter for the navigate function always path of child and secon one is values.
+4. include the parameter inside the url by using **routing.ts**.
+```
+{path:'display/:message',component:DisplayEmpComponent}
+```
+>here message is embeded with message parameter what we send in parent component.
+#### receiving parameter inside child.
+1. import **ActivatedRoute** inside the receiving component.
+2. add dependency inside the constructor.
+3. access the passed value by using the snapshot stored inside the router.
+```
+import { ActivatedRoute } from '@angular/router';
+public parentmessage: any;
+ constructor(private route:ActivatedRoute){}
+ ngOnInit(): void {
+     let  message = this.route.snapshot.paramMap.get("message");
+    
+     
+     this.parentmessage=message;
+     
+     
+}
+```
+> here **message** which is inside the **get method** should be same as what we passed inside the router url.
+4. display the value inside the html.
