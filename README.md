@@ -85,10 +85,10 @@ display(value){
 
 ### 6.Two Way Binding
 - it is basically doing both **event** and **class** binding together.
-- first event binding using ==( )== symbol here the value send from html element to the component class .
-- second the stored value is again displayed using class binding ==[ ]==.
-- here ==ngModel== is used to bind values.
-- to use ==ngModel== we have to import ==FormModule== module inside **app.module**.
+- first event binding using **( )** symbol here the value send from html element to the component class .
+- second the stored value is again displayed using class binding **[ ]**.
+- here **ngModel** is used to bind values.
+- to use **ngModel** we have to import **FormModule** module inside **app.module**.
 ```
 <input type="text" [(ngModule)]="name">
 {{name}}
