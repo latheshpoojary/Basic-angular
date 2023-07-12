@@ -185,7 +185,7 @@ Here **parentData** is same as parent send data.
 
 3.use this variable to display or some operation on that data.
 ```
-<p>chid {{parentData}}</p>//it display chid lathesh
+<p>child {{parentData}}</p>//it display child lathesh
 ```
 - #### sending data from child to parent.
 1.import output and eventEmitter from core module.
